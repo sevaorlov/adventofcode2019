@@ -29,5 +29,5 @@ func fuel(mass int64) int64 {
 		return 0
 	}
 
-    return v + fuel(v)
+	return v + fuel(v)
 }
