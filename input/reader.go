@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 )
 
 func ReadFile(filename string, callback func(line string)) {
@@ -28,4 +29,16 @@ func ReadFile(filename string, callback func(line string)) {
 
 		callback(string(line))
 	}
+}
+
+func ReadArrayFromFile(filename string, size int) [][]string {
+	data := make([][]string, size)
+	var n int
+
+	ReadFile(filename, func(line string) {
+		data[n] = strings.Split(line, ",")
+		n++
+	})
+
+	return data
 }

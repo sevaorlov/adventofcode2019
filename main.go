@@ -3,6 +3,7 @@ package main
 import (
 	"adventofcode2019/day1"
 	"adventofcode2019/day2"
+	"adventofcode2019/day3"
 	"flag"
 	"fmt"
 	"strconv"
@@ -16,6 +17,7 @@ var part = flag.Int("part", 1, "part of the task")
 var days = map[string][]func(string){
 	"day1": {day1.Solve},
 	"day2": {day2.Solve, day2.Solve2},
+	"day3": {day3.Solve, day3.Solve2},
 }
 
 func main() {
