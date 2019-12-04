@@ -31,7 +31,7 @@ func ReadFile(filename string, callback func(line string)) {
 	}
 }
 
-func ReadArrayFromFile(filename string, size int) [][]string {
+func ReadCommaSeparatedArraysFromFile(filename string, size int) [][]string {
 	data := make([][]string, size)
 	var n int
 

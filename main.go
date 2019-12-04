@@ -4,6 +4,7 @@ import (
 	"adventofcode2019/day1"
 	"adventofcode2019/day2"
 	"adventofcode2019/day3"
+	"adventofcode2019/day4"
 	"flag"
 	"fmt"
 	"strconv"
@@ -18,14 +19,15 @@ var days = map[string][]func(string){
 	"day1": {day1.Solve},
 	"day2": {day2.Solve, day2.Solve2},
 	"day3": {day3.Solve, day3.Solve2},
+	"day4": {day4.Part1, day4.Part2},
 }
 
 func main() {
 	flag.Parse()
 
-	solve, ok := days["day"+strconv.Itoa(*day)]
+	funcs, ok := days["day"+strconv.Itoa(*day)]
 	if ok {
-		solve[*part-1](filename())
+		funcs[*part-1](filename())
 	} else {
 		fmt.Printf("solution for a day number %v is not found", *day)
 	}
