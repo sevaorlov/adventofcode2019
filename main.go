@@ -12,7 +12,6 @@ import (
 
 var day = flag.Int("day", 0, "number of the day")
 var test = flag.Bool("test", false, "if to use test input")
-var loglevel = flag.String("loglevel", "info", "log level")
 var part = flag.Int("part", 1, "part of the task")
 
 var days = map[string][]func(string){
