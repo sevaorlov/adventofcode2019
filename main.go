@@ -5,6 +5,8 @@ import (
 	"adventofcode2019/day2"
 	"adventofcode2019/day3"
 	"adventofcode2019/day4"
+	"adventofcode2019/day5"
+	"adventofcode2019/logger"
 	"flag"
 	"fmt"
 	"strconv"
@@ -12,6 +14,7 @@ import (
 
 var day = flag.Int("day", 0, "number of the day")
 var test = flag.Bool("test", false, "if to use test input")
+var loglevel = flag.String("loglevel", "info", "log level")
 var part = flag.Int("part", 1, "part of the task")
 
 var days = map[string][]func(string){
@@ -19,10 +22,13 @@ var days = map[string][]func(string){
 	"day2": {day2.Solve, day2.Solve2},
 	"day3": {day3.Solve, day3.Solve2},
 	"day4": {day4.Part1, day4.Part2},
+	"day5": {day5.Part1, day5.Part2},
 }
 
 func main() {
 	flag.Parse()
+
+	logger.Init(*loglevel)
 
 	funcs, ok := days["day"+strconv.Itoa(*day)]
 	if ok {

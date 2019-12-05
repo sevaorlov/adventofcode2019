@@ -17,7 +17,7 @@ func stringsToInt64Array(a []string) []int64 {
 	for index, item := range a {
 		b[index], err = strconv.ParseInt(item, 10, 64)
 		if err != nil {
-			log.Fatal(err.Error())
+			log.Fatalf("failed to parse an item. Item: %v. Error: %s\n", item, err.Error())
 		}
 	}
 

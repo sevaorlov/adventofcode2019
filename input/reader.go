@@ -24,7 +24,7 @@ func ReadFile(filename string, callback func(line string)) {
 		}
 
 		if err != nil {
-			log.Fatal(err.Error())
+			log.Fatalf("failed to read the line. Error: %s\n", err.Error())
 		}
 
 		callback(string(line))
