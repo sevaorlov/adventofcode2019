@@ -6,6 +6,7 @@ import (
 	"adventofcode2019/day3"
 	"adventofcode2019/day4"
 	"adventofcode2019/day5"
+	"adventofcode2019/day6"
 	"adventofcode2019/logger"
 	"flag"
 	"fmt"
@@ -23,6 +24,7 @@ var days = map[string][]func(string){
 	"day3": {day3.Solve, day3.Solve2},
 	"day4": {day4.Part1, day4.Part2},
 	"day5": {day5.Part1, day5.Part2},
+	"day6": {day6.Part1, day6.Part2},
 }
 
 func main() {
