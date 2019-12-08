@@ -59,7 +59,7 @@ func findPaths(graph map[string][]string, visited map[string]bool, from string, 
 		}
 
 		for _, v := range findPaths(graph, visited, item, to) {
-			pathLengths = append(pathLengths, 1 + v)
+			pathLengths = append(pathLengths, 1+v)
 		}
 	}
 

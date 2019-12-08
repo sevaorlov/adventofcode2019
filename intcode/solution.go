@@ -36,7 +36,7 @@ func Solve(a []int64, inputInstructions []int64, index int) ([]int64, int, error
 		case 3:
 			//fmt.Println("inputIndex", inputIndex)
 			a[p1Index] = inputInstructions[inputIndex]
-			if inputIndex < len(inputInstructions) - 1 {
+			if inputIndex < len(inputInstructions)-1 {
 				inputIndex++
 			}
 			//if inputIndex > 1 {

@@ -48,27 +48,27 @@ func solveForArray(a []int64, inputParam int) error {
 		switch opcode {
 		case 1:
 			a[p3Index] = a[p1Index] + a[p2Index]
-			step=4
+			step = 4
 		case 2:
 			a[p3Index] = a[p1Index] * a[p2Index]
-			step=4
+			step = 4
 		case 3:
 			a[p1Index] = int64(inputParam)
-			step=2
+			step = 2
 		case 4:
 			logger.Info("Output", a[a[i+1]])
-			step=2
+			step = 2
 		case 5:
 			if a[p1Index] != 0 {
 				i = int(a[p2Index])
 			} else {
-				step=3
+				step = 3
 			}
 		case 6:
 			if a[p1Index] == 0 {
 				i = int(a[p2Index])
 			} else {
-				step=3
+				step = 3
 			}
 		case 7:
 			if a[p1Index] < a[p2Index] {
@@ -76,14 +76,14 @@ func solveForArray(a []int64, inputParam int) error {
 			} else {
 				a[p3Index] = 0
 			}
-			step=4
+			step = 4
 		case 8:
 			if a[p1Index] == a[p2Index] {
 				a[p3Index] = 1
 			} else {
 				a[p3Index] = 0
 			}
-			step=4
+			step = 4
 		case 99:
 			return nil
 		default:

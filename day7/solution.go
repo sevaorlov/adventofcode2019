@@ -4,8 +4,8 @@ import (
 	"adventofcode2019/input"
 	"adventofcode2019/intcode"
 	"fmt"
-	"log"
 	"github.com/gitchander/permutation"
+	"log"
 )
 
 const amplifiersNum = 5
