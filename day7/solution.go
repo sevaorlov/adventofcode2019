@@ -3,24 +3,22 @@ package day7
 import (
 	"adventofcode2019/input"
 	"adventofcode2019/intcode"
+	"adventofcode2019/permutations"
 	"fmt"
-	"github.com/gitchander/permutation"
 	"log"
 )
 
 const amplifiersNum = 5
 
 func Part1(filename string) {
-	instructions := input.ReadIntArrayFromFile(filename)
-
-	a := []int{0, 1, 2, 3, 4}
-	variants := permutation.New(permutation.IntSlice(a))
+	instructions := input.ReadInt64CommanedArray(filename)
+	variants := permutations.GenerateInt([]int{0, 1, 2, 3, 4})
 
 	var nextInput []int64
 	var err error
 	var max int64
 
-	for variants.Next() {
+	for _, a := range variants {
 		instrCopy := make([]int64, len(instructions))
 		copy(instrCopy, instructions)
 
@@ -48,18 +46,13 @@ func Part1(filename string) {
 }
 
 func Part2(filename string) {
-	instructions := input.ReadIntArrayFromFile(filename)
-
-	a := []int{5, 6, 7, 8, 9}
-	variants := permutation.New(permutation.IntSlice(a))
+	instructions := input.ReadInt64CommanedArray(filename)
+	variants := permutations.GenerateInt([]int{5, 6, 7, 8, 9})
 
 	var nextInput []int64
 	var max int64
 
-	for variants.Next() {
-		//a = []int{9,7,8,5,6}
-		//fmt.Println(a)
-
+	for _, a := range variants {
 		var halt bool
 		amplifiers := make([][]int64, amplifiersNum)
 		var once bool
