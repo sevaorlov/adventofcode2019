@@ -26,7 +26,7 @@ func Part1(filename string) {
 		}
 	}
 
-	fmt.Println(min, countDigits(a, minIndex, 1) * countDigits(a, minIndex, 2))
+	fmt.Println(countDigits(a, minIndex, 1) * countDigits(a, minIndex, 2))
 }
 
 func Part2(filename string) {
