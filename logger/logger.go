@@ -1,6 +1,8 @@
 package logger
 
-import "fmt"
+import (
+	"fmt"
+)
 
 var logLevel string
 
@@ -18,5 +20,3 @@ func Debug(a ...interface{}) {
 	}
 	fmt.Println(a...)
 }
-
-

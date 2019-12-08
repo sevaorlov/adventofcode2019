@@ -19,7 +19,7 @@ type Operation struct {
 }
 
 func Solve(filename string) {
-	wires := input.ReadCommaSeparatedArraysFromFile(filename, 2)
+	wires := input.ReadStringArraysFromFile(filename, 2)
 
 	minDistanse := int64(math.MaxInt64)
 	points := make(map[Point]int)
@@ -63,7 +63,7 @@ func Solve(filename string) {
 }
 
 func Solve2(filename string) {
-	wires := input.ReadCommaSeparatedArraysFromFile(filename, 2)
+	wires := input.ReadStringArraysFromFile(filename, 2)
 
 	minSteps := int64(math.MaxInt64)
 	points := make(map[Point][]int)
