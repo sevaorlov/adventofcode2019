@@ -44,7 +44,7 @@ func ReadStringArraysFromFile(filename string, size int) [][]string {
 	return data
 }
 
-func ReadIntArrayFromFile(filename string) []int64 {
+func ReadInt64CommanedArray(filename string) []int64 {
 	var a []int64
 
 	line := ReadSingleLine(filename)
