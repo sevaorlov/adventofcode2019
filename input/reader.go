@@ -19,7 +19,7 @@ func ReadFile(filename string, callback func(line string)) {
 	reader := bufio.NewReader(file)
 
 	for {
-		line, _, err := reader.ReadLine()
+		line, err := reader.ReadString('\n')
 		if err == io.EOF {
 			break
 		}
@@ -28,7 +28,7 @@ func ReadFile(filename string, callback func(line string)) {
 			log.Fatalf("failed to read the line. Error: %s\n", err.Error())
 		}
 
-		callback(string(line))
+		callback(strings.TrimSuffix(line, "\n"))
 	}
 }
 
@@ -46,24 +46,52 @@ func ReadStringArraysFromFile(filename string, size int) [][]string {
 
 func ReadIntArrayFromFile(filename string) []int64 {
 	var a []int64
+
+	line := ReadSingleLine(filename)
+	strArr := strings.Split(line, ",")
+
+	for _, item := range strArr {
+		v, err := strconv.ParseInt(item, 10, 64)
+		if err != nil {
+			log.Fatalf("failed to parse a line to int. Error: %s\n", err.Error())
+		}
+		a = append(a, v)
+	}
+
+	return a
+}
+
+func ReadSingleLine(filename string) string {
 	var read bool
+	var singleLine string
 
 	ReadFile(filename, func(line string) {
 		if read {
 			log.Fatalf("more than 1 line in the input file\n")
 		}
 
-		strArr := strings.Split(line, ",")
+		singleLine = line
 
-		for _, item := range strArr {
-			v, err := strconv.ParseInt(item, 10, 64)
-			if err != nil {
-				log.Fatalf("failed to parse a line to int. Error: %s\n", err.Error())
-			}
-			a = append(a, v)
-		}
 		read = true
 	})
+
+	return singleLine
+}
+
+func ReadIntSpacedArray(filename string) []int {
+	line := ReadSingleLine(filename)
+
+	var a []int
+
+	strA := strings.Split(line, "")
+
+	for _, strInt := range strA {
+		i, err := strconv.Atoi(strInt)
+		if err != nil {
+			log.Fatalf("couldnt parse string to int %v. Error: %s \n", strInt, err.Error())
+		}
+		a = append(a, i)
+	}
 
 	return a
 }
