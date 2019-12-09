@@ -44,7 +44,7 @@ func ReadStringArraysFromFile(filename string, size int) [][]string {
 	return data
 }
 
-func ReadInt64CommanedArray(filename string) []int64 {
+func ReadInt64CommonedArray(filename string) []int64 {
 	var a []int64
 
 	line := ReadSingleLine(filename)
@@ -53,7 +53,7 @@ func ReadInt64CommanedArray(filename string) []int64 {
 	for _, item := range strArr {
 		v, err := strconv.ParseInt(item, 10, 64)
 		if err != nil {
-			log.Fatalf("failed to parse a line to int. Error: %s\n", err.Error())
+			log.Fatalf("failed to parse a line item to int. Item: %v. Error: %s\n", item, err.Error())
 		}
 		a = append(a, v)
 	}
