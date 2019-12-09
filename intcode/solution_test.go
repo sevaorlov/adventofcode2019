@@ -54,6 +54,19 @@ func TestSolve(t *testing.T) {
 			wantIndex: -1,
 			wantErr:   false,
 		},
+		{
+			name: "",
+			args: args{
+				a:                 []int64{
+					3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,
+					104,999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99,
+				},
+				inputInstructions: []int64{0},
+			},
+			want:      []int64{999},
+			wantIndex: -1,
+			wantErr:   false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
