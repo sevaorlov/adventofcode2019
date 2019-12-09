@@ -2,12 +2,11 @@ package day1
 
 import (
 	"adventofcode2019/input"
-	"fmt"
 	"log"
 	"strconv"
 )
 
-func Solve(filename string) {
+func Part2(filename string) string {
 	var sum int64
 
 	input.ReadFile(filename, func(line string) {
@@ -19,7 +18,7 @@ func Solve(filename string) {
 		sum += fuel(mass)
 	})
 
-	fmt.Println(sum)
+	return strconv.FormatInt(sum, 10)
 }
 
 func fuel(mass int64) int64 {

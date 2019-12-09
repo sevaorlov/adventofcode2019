@@ -3,11 +3,11 @@ package day9
 import (
 	"adventofcode2019/input"
 	"adventofcode2019/intcode"
-	"fmt"
 	"log"
+	"strconv"
 )
 
-func Part1(filename string) {
+func Part1(filename string) string {
 	instructions := input.ReadInt64CommonedArray(filename)
 	a := make([]int64, len(instructions)*100)
 	a = append(instructions, a...)
@@ -17,10 +17,10 @@ func Part1(filename string) {
 		log.Fatalf("error solving intcode. Error: %s", err.Error())
 	}
 
-	fmt.Println(output[0])
+	return strconv.FormatInt(output[0], 10)
 }
 
-func Part2(filename string) {
+func Part2(filename string) string {
 	instructions := input.ReadInt64CommonedArray(filename)
 	a := make([]int64, len(instructions)*100)
 	a = append(instructions, a...)
@@ -30,5 +30,5 @@ func Part2(filename string) {
 		log.Fatalf("error solving intcode. Error: %s", err.Error())
 	}
 
-	fmt.Println(output[0])
+	return strconv.FormatInt(output[0], 10)
 }

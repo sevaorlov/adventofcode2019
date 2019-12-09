@@ -1,8 +1,8 @@
 package day4
 
 import (
-	"fmt"
 	"math"
+	"strconv"
 )
 
 const (
@@ -11,7 +11,7 @@ const (
 	length = 6
 )
 
-func Part1(_ string) {
+func Part1(_ string) string {
 	var n int
 
 	possibleNumbers(func(ints [length]int) {
@@ -25,10 +25,10 @@ func Part1(_ string) {
 		}
 	})
 
-	fmt.Println(n)
+	return strconv.Itoa(n)
 }
 
-func Part2(_ string) {
+func Part2(_ string) string {
 	var n int
 
 	possibleNumbers(func(ints [length]int) {
@@ -47,7 +47,7 @@ func Part2(_ string) {
 		}
 	})
 
-	fmt.Println(n)
+	return strconv.Itoa(n)
 }
 
 func possibleNumbers(found func([length]int)) {

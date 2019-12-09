@@ -6,45 +6,48 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"strconv"
 )
 
-func Solve(filename string) {
-	input.ReadFile(filename, func(line string) {
-		a := transform.Int64ArrayFromLine(line)
-		a[1] = 12
-		a[2] = 2
-		//fmt.Println(b)
+const part2Output = 19690720
 
-		solution, err := solveForArray(a)
-		if err != nil {
-			log.Fatalf(err.Error())
-		}
+func Part1(filename string) string {
+	line := input.ReadSingleLine(filename)
 
-		fmt.Println(solution)
-	})
+	a := transform.Int64ArrayFromLine(line)
+	a[1] = 12
+	a[2] = 2
+	//fmt.Println(b)
+
+	solution, err := solveForArray(a)
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+
+	return strconv.FormatInt(solution, 10)
 }
 
-func Solve2(filename string) {
-	input.ReadFile(filename, func(line string) {
-		for i := 0; i <= 99; i++ {
-			for j := 0; j <= 99; j++ {
-				a := transform.Int64ArrayFromLine(line)
-				a[1] = int64(i)
-				a[2] = int64(j)
+func Part2(filename string) string {
+	line := input.ReadSingleLine(filename)
+	for i := 0; i <= 99; i++ {
+		for j := 0; j <= 99; j++ {
+			a := transform.Int64ArrayFromLine(line)
+			a[1] = int64(i)
+			a[2] = int64(j)
 
-				solution, err := solveForArray(a)
-				if err != nil {
-					log.Println(err.Error())
-					continue
-				}
+			solution, err := solveForArray(a)
+			if err != nil {
+				fmt.Println(err.Error())
+				continue
+			}
 
-				if solution == 19690720 {
-					fmt.Println(a[1], a[2], a[1]*100+a[2])
-					return
-				}
+			if solution == part2Output {
+				return strconv.FormatInt(a[1]*100+a[2], 10)
 			}
 		}
-	})
+	}
+
+	return ""
 }
 
 func solveForArray(a []int64) (int64, error) {

@@ -4,13 +4,13 @@ import (
 	"adventofcode2019/input"
 	"adventofcode2019/intcode"
 	"adventofcode2019/permutations"
-	"fmt"
 	"log"
+	"strconv"
 )
 
 const amplifiersNum = 5
 
-func Part1(filename string) {
+func Part1(filename string) string {
 	instructions := input.ReadInt64CommonedArray(filename)
 	variants := permutations.GenerateInt([]int{0, 1, 2, 3, 4})
 
@@ -38,10 +38,10 @@ func Part1(filename string) {
 		}
 	}
 
-	fmt.Println(max)
+	return strconv.FormatInt(max, 10)
 }
 
-func Part2(filename string) {
+func Part2(filename string) string {
 	instructions := input.ReadInt64CommonedArray(filename)
 	variants := permutations.GenerateInt([]int{5, 6, 7, 8, 9})
 
@@ -91,5 +91,5 @@ func Part2(filename string) {
 		}
 	}
 
-	fmt.Println(max)
+	return strconv.FormatInt(max, 10)
 }

@@ -3,10 +3,11 @@ package day6
 import (
 	"adventofcode2019/input"
 	"adventofcode2019/logger"
+	"strconv"
 	"strings"
 )
 
-func Part1(filename string) {
+func Part1(filename string) string {
 	graph := make(map[string][]string)
 
 	input.ReadFile(filename, func(line string) {
@@ -20,10 +21,11 @@ func Part1(filename string) {
 	for key, _ := range graph {
 		count += countConnections(graph, key)
 	}
-	logger.Info(count)
+
+	return strconv.Itoa(count)
 }
 
-func Part2(filename string) {
+func Part2(filename string) string {
 	graph := make(map[string][]string)
 
 	input.ReadFile(filename, func(line string) {
@@ -39,7 +41,7 @@ func Part2(filename string) {
 	// subtract SAN and YOU nodes paths
 	min -= 2
 
-	logger.Info(min)
+	return strconv.Itoa(min)
 }
 
 func findPaths(graph map[string][]string, visited map[string]bool, from string, to string) []int {

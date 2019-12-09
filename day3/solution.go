@@ -18,7 +18,7 @@ type Operation struct {
 	step   int
 }
 
-func Solve(filename string) {
+func Part1(filename string) string {
 	wires := input.ReadStringArraysFromFile(filename, 2)
 
 	minDistanse := int64(math.MaxInt64)
@@ -57,12 +57,12 @@ func Solve(filename string) {
 	if minDistanse == math.MaxInt64 {
 		fmt.Println("intersections were not found")
 		//fmt.Println(points)
-		return
+		return ""
 	}
-	fmt.Println(minDistanse)
+	return strconv.FormatInt(minDistanse, 10)
 }
 
-func Solve2(filename string) {
+func Part2(filename string) string {
 	wires := input.ReadStringArraysFromFile(filename, 2)
 
 	minSteps := int64(math.MaxInt64)
@@ -106,10 +106,10 @@ func Solve2(filename string) {
 	if minSteps == math.MaxInt64 {
 		fmt.Println("intersections were not found")
 		//fmt.Println(points)
-		return
+		return ""
 	}
 	//fmt.Println(points)
-	fmt.Println(minSteps)
+	return strconv.FormatInt(minSteps, 10)
 }
 
 func parsedOperation(op string) Operation {

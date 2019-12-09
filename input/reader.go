@@ -2,6 +2,7 @@ package input
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -9,8 +10,22 @@ import (
 	"strings"
 )
 
-func ReadFile(filename string, callback func(line string)) {
-	file, err := os.Open(filename)
+const (
+	MainFileName = "input.txt"
+	TestFileName = "test.txt"
+)
+
+func FilePath(day int, test bool) string {
+	filename := MainFileName
+	if test {
+		filename = TestFileName
+	}
+
+	return fmt.Sprintf("./day%v/%s", day, filename)
+}
+
+func ReadFile(filepath string, callback func(line string)) {
+	file, err := os.Open(filepath)
 	if err != nil {
 		log.Fatal(err.Error())
 	}

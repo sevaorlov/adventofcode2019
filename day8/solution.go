@@ -4,6 +4,7 @@ import (
 	"adventofcode2019/input"
 	"fmt"
 	"math"
+	"strconv"
 )
 
 const (
@@ -11,7 +12,7 @@ const (
 	pixelHeight = 6
 )
 
-func Part1(filename string) {
+func Part1(filename string) string {
 	a := input.ReadIntSpacedArray(filename)
 
 	min := math.MaxInt32
@@ -26,10 +27,10 @@ func Part1(filename string) {
 		}
 	}
 
-	fmt.Println(countDigits(a, minIndex, 1) * countDigits(a, minIndex, 2))
+	return strconv.Itoa(countDigits(a, minIndex, 1) * countDigits(a, minIndex, 2))
 }
 
-func Part2(filename string) {
+func Part2(filename string) string {
 	a := input.ReadIntSpacedArray(filename)
 
 	layers := len(a) / (pixelHeight * pixelWidth)
@@ -59,6 +60,8 @@ func Part2(filename string) {
 		}
 		fmt.Println()
 	}
+
+	return ""
 }
 
 func countDigits(a []int, index, which int) int {

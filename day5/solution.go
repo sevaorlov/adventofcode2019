@@ -7,32 +7,36 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"strconv"
 )
 
-func Part1(filename string) {
-	input.ReadFile(filename, func(line string) {
-		a := transform.Int64ArrayFromLine(line)
+func Part1(filename string) string {
+	line := input.ReadSingleLine(filename)
+	a := transform.Int64ArrayFromLine(line)
 
-		err := solveForArray(a, 1)
-		if err != nil {
-			log.Fatalf("cannot solve %s\n", err.Error())
-		}
-	})
+	res, err := solveForArray(a, 1)
+	if err != nil {
+		log.Fatalf("cannot solve %s\n", err.Error())
+	}
+
+	return strconv.FormatInt(res, 10)
 }
 
-func Part2(filename string) {
-	input.ReadFile(filename, func(line string) {
-		a := transform.Int64ArrayFromLine(line)
+func Part2(filename string) string {
+	line := input.ReadSingleLine(filename)
+	a := transform.Int64ArrayFromLine(line)
 
-		err := solveForArray(a, 5)
-		if err != nil {
-			log.Fatalf("cannot solve %s\n", err.Error())
-		}
-	})
+	res, err := solveForArray(a, 5)
+	if err != nil {
+		log.Fatalf("cannot solve %s\n", err.Error())
+	}
+
+	return strconv.FormatInt(res, 10)
 }
 
-func solveForArray(a []int64, inputParam int) error {
+func solveForArray(a []int64, inputParam int) (int64, error) {
 	var i, last int
+	var output int64
 
 	for i < len(a) {
 		var step int
@@ -56,7 +60,7 @@ func solveForArray(a []int64, inputParam int) error {
 			a[p1Index] = int64(inputParam)
 			step = 2
 		case 4:
-			logger.Info("Output", a[a[i+1]])
+			output = a[a[i+1]]
 			step = 2
 		case 5:
 			if a[p1Index] != 0 {
@@ -85,9 +89,9 @@ func solveForArray(a []int64, inputParam int) error {
 			}
 			step = 4
 		case 99:
-			return nil
+			return output, nil
 		default:
-			return errors.New(fmt.Sprintf("unknown code %v", opcode))
+			return 0, errors.New(fmt.Sprintf("unknown code %v", opcode))
 		}
 		logger.Debug("after ", a)
 
@@ -99,7 +103,7 @@ func solveForArray(a []int64, inputParam int) error {
 			log.Fatal("loop", a[i], a)
 		}
 	}
-	return nil
+	return 0, nil
 }
 
 func parsedParameters(a []int64, index int) (int, int, int, int) {
