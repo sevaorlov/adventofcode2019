@@ -11,10 +11,10 @@ func generate(a []int, k int) [][]int {
 		return [][]int{tmp}
 	}
 
-	res := generate(a, k - 1)
+	res := generate(a, k-1)
 
 	for i := 0; i < k-1; i++ {
-		if k % 2 == 0 {
+		if k%2 == 0 {
 			tmp := a[i]
 			a[i] = a[k-1]
 			a[k-1] = tmp
