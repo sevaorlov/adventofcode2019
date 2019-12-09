@@ -11,7 +11,7 @@ import (
 const amplifiersNum = 5
 
 func Part1(filename string) {
-	instructions := input.ReadInt64CommanedArray(filename)
+	instructions := input.ReadInt64CommonedArray(filename)
 	variants := permutations.GenerateInt([]int{0, 1, 2, 3, 4})
 
 	var nextInput []int64
@@ -22,19 +22,15 @@ func Part1(filename string) {
 		instrCopy := make([]int64, len(instructions))
 		copy(instrCopy, instructions)
 
-		//fmt.Println("permutation", a)
 		for i := 0; i < amplifiersNum; i++ {
 			if i == 0 {
 				nextInput = []int64{0}
 			}
 			nextInput = append([]int64{int64(a[i])}, nextInput...)
-			//fmt.Println("solve", nextInput)
-			nextInput, _, err = intcode.Solve(instrCopy, nextInput, 0)
+			nextInput, _, err = intcode.Solve(instrCopy, nextInput, 0, true)
 			if err != nil {
 				log.Fatalf("error on A amlifier. Error: %s", err.Error())
 			}
-
-			//fmt.Print("output", nextInput)
 		}
 
 		if max < nextInput[0] {
@@ -46,7 +42,7 @@ func Part1(filename string) {
 }
 
 func Part2(filename string) {
-	instructions := input.ReadInt64CommanedArray(filename)
+	instructions := input.ReadInt64CommonedArray(filename)
 	variants := permutations.GenerateInt([]int{5, 6, 7, 8, 9})
 
 	var nextInput []int64
@@ -60,7 +56,6 @@ func Part2(filename string) {
 		steps := make([]int, amplifiersNum)
 
 		var j int
-		//fmt.Println("permutation", a)
 		for !halt {
 			for i := 0; i < amplifiersNum; i++ {
 				j++
@@ -71,35 +66,23 @@ func Part2(filename string) {
 				}
 
 				if len(amplifiers[i]) == 0 {
-					//fmt.Println("create amplifier", i)
 					amplifiers[i] = make([]int64, len(instructions))
 					copy(amplifiers[i], instructions)
 
 					nextInput = append([]int64{int64(a[i])}, nextInput...)
 				}
-				//if j < 20 {
-				//	fmt.Println("solve", nextInput)
-				//}
-				output, step, err := intcode.Solve(amplifiers[i], nextInput, steps[i])
-				if err != nil && err != intcode.HaltErr {
+				output, step, err := intcode.Solve(amplifiers[i], nextInput, steps[i], true)
+				if err != nil {
 					log.Fatalf("error on A amlifier. Error: %s", err.Error())
 				}
-				//if j < 20 {
-				//	fmt.Println("output", output)
-				//
-				//}
 
 				steps[i] = step
 
-				if err == intcode.HaltErr {
-					//fmt.Println("halt")
+				if step == -1 {
 					halt = true
-					//break
 				} else {
 					nextInput = output
 				}
-
-				//fmt.Print("output", nextInput)
 			}
 		}
 
@@ -107,8 +90,6 @@ func Part2(filename string) {
 			max = nextInput[0]
 		}
 	}
-
-	//}
 
 	fmt.Println(max)
 }

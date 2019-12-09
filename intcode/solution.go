@@ -1,7 +1,6 @@
 package intcode
 
 import (
-	"adventofcode2019/logger"
 	"errors"
 	"fmt"
 	"log"
@@ -9,105 +8,108 @@ import (
 
 var HaltErr = errors.New("halt")
 
-func Solve(a []int64, inputInstructions []int64, index int) ([]int64, int, error) {
-	var i, last, inputIndex int
+func Solve(a []int64, inputInstructions []int64, startIndex int, stopOnOutput bool) ([]int64, int, error) {
+	var last, inputIndex, relBase int
 	var output []int64
 
-	i = index
+	i := startIndex
 
-	for i < len(a) {
-		var step int
+	for {
 		last = i
 
-		opcode, p1Index, p2Index, p3Index := parsedParameters(a, i)
+		//logger.Debug("---")
+		opcode, p1Index, p2Index, p3Index := parsedParameters(a, i, relBase)
 
-		if i+3 < len(a) {
-			logger.Debug(a[i], a[i+1], a[i+2], a[i+3])
-		}
-		logger.Debug("before", a)
+		//if i+3 < len(a) {
+		//	logger.Debug(a[i], a[i+1], a[i+2], a[i+3])
+		//}
+		//logger.Debug("before", a)
 
+		//logger.Debug("opcode", opcode)
+		//logger.Debug(a[i], a[i+1], a[i+2], a[i+3])
 		switch opcode {
 		case 1:
-			a[p3Index] = a[p1Index] + a[p2Index]
-			step = 4
+			write(a, p3Index, a[p1Index]+a[p2Index])
+			i += 4
 		case 2:
-			a[p3Index] = a[p1Index] * a[p2Index]
-			step = 4
+			write(a, p3Index, a[p1Index]*a[p2Index])
+			i += 4
 		case 3:
-			//fmt.Println("inputIndex", inputIndex)
-			a[p1Index] = inputInstructions[inputIndex]
+			write(a, p1Index, inputInstructions[inputIndex])
 			if inputIndex < len(inputInstructions)-1 {
 				inputIndex++
 			}
-			//if inputIndex > 1 {
-			//	inputIndex = 1
-			//}
-			step = 2
+			i += 2
 		case 4:
-			//if a[a[i+1]] != 0 {
-			output = append(output, a[a[i+1]])
+			//if a[p1Index] != 0 {
+			output = append(output, a[p1Index])
 			//}
-			step = 2
-			return output, i + step, nil
+			i += 2
+			if stopOnOutput {
+				return output, i, nil
+			}
 		case 5:
 			if a[p1Index] != 0 {
 				i = int(a[p2Index])
 			} else {
-				step = 3
+				i += 3
 			}
 		case 6:
 			if a[p1Index] == 0 {
 				i = int(a[p2Index])
 			} else {
-				step = 3
+				i += 3
 			}
 		case 7:
 			if a[p1Index] < a[p2Index] {
-				a[p3Index] = 1
+				write(a, p3Index, 1)
 			} else {
-				a[p3Index] = 0
+				write(a, p3Index, 0)
 			}
-			step = 4
+			i += 4
 		case 8:
 			if a[p1Index] == a[p2Index] {
-				a[p3Index] = 1
+				write(a, p3Index, 1)
 			} else {
-				a[p3Index] = 0
+				write(a, p3Index, 0)
 			}
-			step = 4
+			i += 4
+		case 9:
+			relBase += int(a[p1Index])
+			i += 2
 		case 99:
-			return output, 0, HaltErr
+			return output, -1, nil
 		default:
 			return []int64{}, 0, errors.New(fmt.Sprintf("unknown code %v", opcode))
 		}
-		logger.Debug("after ", a)
-
-		if step > 0 {
-			i += step
-		}
+		//logger.Debug("after ", a)
 
 		if last == i {
 			log.Fatal("loop", a[i], a)
 		}
 	}
-	fmt.Println("empty")
 	return []int64{}, 0, nil
 }
 
-func parsedParameters(a []int64, index int) (int, int, int, int) {
+func write(a []int64, index int, value int64) {
+	//logger.Debug("write", index, value)
+	a[index] = value
+}
+
+func parsedParameters(a []int64, index int, relBase int) (int, int, int, int) {
 	var p1Index, p2Index, pIndex3 int
 
 	mode3, mode2, mode1, opcode := instructions(int(a[index]))
-	logger.Debug("instructions", a[index], mode3, mode2, mode1, opcode)
+	//logger.Debug("instructions", a[index], mode3, mode2, mode1, opcode)
 
 	if index+1 < len(a) {
-		p1Index = getIndexWithMode(a, index+1, mode1)
+		p1Index = getIndexWithMode(a, index+1, mode1, relBase)
 	}
 	if index+2 < len(a) {
-		p2Index = getIndexWithMode(a, index+2, mode2)
+		p2Index = getIndexWithMode(a, index+2, mode2, relBase)
 	}
 	if index+3 < len(a) {
-		pIndex3 = getIndexWithMode(a, index+3, mode3)
+		pIndex3 = getIndexWithMode(a, index+3, mode3, relBase)
 	}
 
 	return opcode, p1Index, p2Index, pIndex3
@@ -115,14 +117,18 @@ func parsedParameters(a []int64, index int) (int, int, int, int) {
 
 func instructions(k int) (int, int, int, int) {
 	a := k / 10000
-	b := (k - a) / 1000
-	c := (k % 1000) / 100
+	b := k / 1000 % 10
+	c := k / 100 % 10
 	return a, b, c, k % 100
 }
 
-func getIndexWithMode(a []int64, index, mode int) int {
-	if mode == 1 {
+func getIndexWithMode(a []int64, index, mode int, relBase int) int {
+	switch mode {
+	case 1:
 		return index
+	case 2:
+		return int(a[index]) + relBase
+	default:
+		return int(a[index])
 	}
-	return int(a[index])
 }
