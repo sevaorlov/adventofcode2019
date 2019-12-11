@@ -7,7 +7,6 @@ import (
 	"testing"
 )
 
-
 func TestPart1(t *testing.T) {
 	got := day2.Part1(input.MainFileName)
 	assert.Equal(t, "3516593", got)
