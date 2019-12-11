@@ -12,7 +12,7 @@ import (
 const (
 	asteroidStr = "#"
 	asteroidID  = 1
-	upAngle = 3.141592653589793
+	upAngle     = 3.141592653589793
 	betAsteroid = 200
 )
 
@@ -66,7 +66,7 @@ func Part2(filename string) string {
 			destroyedCount++
 
 			if destroyedCount == betAsteroid {
-				return strconv.Itoa(point.x * 100 + point.y)
+				return strconv.Itoa(point.x*100 + point.y)
 			}
 		}
 	}
@@ -146,7 +146,7 @@ func sortPointsSlice(points []Point, point Point) {
 }
 
 func distanceBetweenPoints(p1 Point, p2 Point) float64 {
-	return math.Sqrt(math.Pow(float64(p1.x - p2.x), 2) + math.Pow(float64(p1.y - p2.y), 2))
+	return math.Sqrt(math.Pow(float64(p1.x-p2.x), 2) + math.Pow(float64(p1.y-p2.y), 2))
 }
 
 func readAllLines(filename string) []string {

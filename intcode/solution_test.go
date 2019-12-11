@@ -70,7 +70,7 @@ func TestSolve(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, got1, err := Solve(tt.args.a, tt.args.inputInstructions, tt.args.index, tt.args.stopOnOutput)
+			got, got1, _, err := Solve(tt.args.a, tt.args.inputInstructions, tt.args.index, 0, tt.args.stopOnOutput)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Solve() error = %v, wantErr %v", err, tt.wantErr)
 				return

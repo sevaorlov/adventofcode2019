@@ -6,12 +6,11 @@ import (
 	"log"
 )
 
-var HaltErr = errors.New("halt")
-
-func Solve(a []int64, inputInstructions []int64, startIndex int, stopOnOutput bool) ([]int64, int, error) {
-	var last, inputIndex, relBase int
+func Solve(a []int64, inputInstructions []int64, startIndex int, startRelBase int, stopOnOutput bool) ([]int64, int, int, error) {
+	var last, inputIndex int
 	var output []int64
 
+	relBase := startRelBase
 	i := startIndex
 
 	for {
@@ -46,7 +45,7 @@ func Solve(a []int64, inputInstructions []int64, startIndex int, stopOnOutput bo
 			//}
 			i += 2
 			if stopOnOutput {
-				return output, i, nil
+				return output, i, relBase, nil
 			}
 		case 5:
 			if a[p1Index] != 0 {
@@ -78,9 +77,9 @@ func Solve(a []int64, inputInstructions []int64, startIndex int, stopOnOutput bo
 			relBase += int(a[p1Index])
 			i += 2
 		case 99:
-			return output, -1, nil
+			return output, -1, 0, nil
 		default:
-			return []int64{}, 0, errors.New(fmt.Sprintf("unknown code %v", opcode))
+			return []int64{}, 0, 0, errors.New(fmt.Sprintf("unknown code %v", opcode))
 		}
 		//logger.Debug("after ", a)
 
@@ -88,7 +87,6 @@ func Solve(a []int64, inputInstructions []int64, startIndex int, stopOnOutput bo
 			log.Fatal("loop", a[i], a)
 		}
 	}
-	return []int64{}, 0, nil
 }
 
 func write(a []int64, index int, value int64) {

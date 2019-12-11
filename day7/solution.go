@@ -27,7 +27,7 @@ func Part1(filename string) string {
 				nextInput = []int64{0}
 			}
 			nextInput = append([]int64{int64(a[i])}, nextInput...)
-			nextInput, _, err = intcode.Solve(instrCopy, nextInput, 0, true)
+			nextInput, _, _, err = intcode.Solve(instrCopy, nextInput, 0, 0, true)
 			if err != nil {
 				log.Fatalf("error on A amlifier. Error: %s", err.Error())
 			}
@@ -71,7 +71,7 @@ func Part2(filename string) string {
 
 					nextInput = append([]int64{int64(a[i])}, nextInput...)
 				}
-				output, step, err := intcode.Solve(amplifiers[i], nextInput, steps[i], true)
+				output, step, _, err := intcode.Solve(amplifiers[i], nextInput, steps[i], 0, true)
 				if err != nil {
 					log.Fatalf("error on A amlifier. Error: %s", err.Error())
 				}
