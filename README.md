@@ -3,3 +3,5 @@
 `go run main.go -day=4 -part=2 -test=true` - will run day 5 part 2 with test input
 
 `make test` - will run tests
+
+`make build_day DAY=13` - to build day 13 skeleton
