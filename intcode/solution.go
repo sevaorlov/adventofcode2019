@@ -6,58 +6,57 @@ import (
 	"log"
 )
 
-func Solve(a []int64, inputInstructions []int64, startIndex int, startRelBase int, stopOnOutput bool) ([]int64, int, int, error) {
+func Solve(a []int64, inputInstructions []int64, startIndex int, startRelBase int, stopOnOutput bool) (output []int64, index int, relBase int, err error) {
 	var last, inputIndex int
-	var output []int64
 
-	relBase := startRelBase
-	i := startIndex
+	relBase = startRelBase
+	index = startIndex
 
 	for {
-		last = i
+		last = index
 
 		//logger.Debug("---")
-		opcode, p1Index, p2Index, p3Index := parsedParameters(a, i, relBase)
+		opcode, p1Index, p2Index, p3Index := parsedParameters(a, index, relBase)
 
-		//if i+3 < len(a) {
-		//	logger.Debug(a[i], a[i+1], a[i+2], a[i+3])
+		//if index+3 < len(a) {
+		//	logger.Debug(a[index], a[index+1], a[index+2], a[index+3])
 		//}
 		//logger.Debug("before", a)
 
 		//logger.Debug("opcode", opcode)
-		//logger.Debug(a[i], a[i+1], a[i+2], a[i+3])
+		//logger.Debug(a[index], a[index+1], a[index+2], a[index+3])
 		switch opcode {
 		case 1:
 			write(a, p3Index, a[p1Index]+a[p2Index])
-			i += 4
+			index += 4
 		case 2:
 			write(a, p3Index, a[p1Index]*a[p2Index])
-			i += 4
+			index += 4
 		case 3:
 			write(a, p1Index, inputInstructions[inputIndex])
 			if inputIndex < len(inputInstructions)-1 {
 				inputIndex++
 			}
-			i += 2
+			index += 2
 		case 4:
 			//if a[p1Index] != 0 {
 			output = append(output, a[p1Index])
 			//}
-			i += 2
+			index += 2
 			if stopOnOutput {
-				return output, i, relBase, nil
+				return
 			}
 		case 5:
 			if a[p1Index] != 0 {
-				i = int(a[p2Index])
+				index = int(a[p2Index])
 			} else {
-				i += 3
+				index += 3
 			}
 		case 6:
 			if a[p1Index] == 0 {
-				i = int(a[p2Index])
+				index = int(a[p2Index])
 			} else {
-				i += 3
+				index += 3
 			}
 		case 7:
 			if a[p1Index] < a[p2Index] {
@@ -65,17 +64,17 @@ func Solve(a []int64, inputInstructions []int64, startIndex int, startRelBase in
 			} else {
 				write(a, p3Index, 0)
 			}
-			i += 4
+			index += 4
 		case 8:
 			if a[p1Index] == a[p2Index] {
 				write(a, p3Index, 1)
 			} else {
 				write(a, p3Index, 0)
 			}
-			i += 4
+			index += 4
 		case 9:
 			relBase += int(a[p1Index])
-			i += 2
+			index += 2
 		case 99:
 			return output, -1, 0, nil
 		default:
@@ -83,8 +82,8 @@ func Solve(a []int64, inputInstructions []int64, startIndex int, startRelBase in
 		}
 		//logger.Debug("after ", a)
 
-		if last == i {
-			log.Fatal("loop", a[i], a)
+		if last == index {
+			log.Fatal("loop", a[index], a)
 		}
 	}
 }

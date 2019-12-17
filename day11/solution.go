@@ -24,7 +24,7 @@ func (d *Direction) turn(degrees int) {
 }
 
 type Robot struct {
-	x, y int
+	x, y      int
 	direction Direction
 }
 
@@ -171,7 +171,7 @@ func instructionsForRobot(code []int64, color chan<- int, move chan<- int, input
 	var input int64
 
 	for {
-		input = <- inputCh
+		input = <-inputCh
 		//fmt.Println("solve", input, index)
 		output, index, relBase, err = intcode.Solve(code, []int64{input}, index, relBase, true)
 		if err != nil {

@@ -4,6 +4,7 @@ import (
 	"adventofcode2019/day1"
 	"adventofcode2019/day10"
 	"adventofcode2019/day11"
+	"adventofcode2019/day13"
 	"adventofcode2019/day2"
 	"adventofcode2019/day3"
 	"adventofcode2019/day4"
@@ -36,6 +37,7 @@ var days = map[string][]func(string) string{
 	"day9":  {day9.Part1, day9.Part2},
 	"day10": {day10.Part1, day10.Part2},
 	"day11": {day11.Part1, day11.Part2},
+	"day13": {day13.Part1, day13.Part2},
 }
 
 func main() {
