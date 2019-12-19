@@ -6,6 +6,35 @@ import (
 	"log"
 )
 
+type OneStepProgram struct {
+	index, relBase int
+	code           []int64
+	Finished       bool
+}
+
+func NewOneStepProgram(code []int64) OneStepProgram {
+	return OneStepProgram{code: code}
+}
+
+func (p *OneStepProgram) Run(input int64) int64 {
+	var err error
+	var output []int64
+
+	if p.Finished {
+		return 0
+	}
+	output, p.index, p.relBase, err = Solve(p.code, []int64{input}, p.index, p.relBase, true)
+	if err != nil {
+		log.Fatal("failed to solve intcode", err.Error())
+	}
+
+	if p.index == -1 {
+		p.Finished = true
+		return 0
+	}
+	return output[0]
+}
+
 func Solve(a []int64, inputInstructions []int64, startIndex int, startRelBase int, stopOnOutput bool) (output []int64, index int, relBase int, err error) {
 	var last, inputIndex int
 
