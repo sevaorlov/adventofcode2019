@@ -97,12 +97,13 @@ func (r *Robot) findPathToMask(x, y int, area Area) []int {
 
 	for point := range searchCh {
 		queueCount--
+
 		for _, direction := range []int{north, south, west, east} {
 
 			x1, y1 := newCoord(point.x, point.y, direction)
 			//fmt.Println("go to ", x1, y1)
 
-			if visited[y1][x1] || x1 < 0 || y1 < 0 || x1 >= len(area) || y1 >= len(area) {
+			if x1 < 0 || y1 < 0 || x1 >= len(area) || y1 >= len(area) || visited[y1][x1] {
 				//fmt.Println("cont")
 				continue
 			}
@@ -124,7 +125,6 @@ func (r *Robot) findPathToMask(x, y int, area Area) []int {
 				searchCh <- Point{x, y, dist}
 			}(x1, y1, point.dist+1)
 		}
-
 		if queueCount == 0 {
 			close(searchCh)
 		}
@@ -199,12 +199,41 @@ func Part1(filename string) string {
 	robot := Robot{program: program}
 	robot.explore(robotX, robotY, area)
 
-	area.print()
+	//area.print()
 
 	paths := robot.findPathToMask(robotX, robotY, area)
 	return strconv.Itoa(min(paths))
 }
 
 func Part2(filename string) string {
-	return ""
+	code := inputInstructions(filename)
+	program := intcode.NewOneStepProgram(code)
+
+	robotX := 50
+	robotY := 50
+
+	area := buildArea(200)
+	area[robotY][robotX] = "D"
+
+	robot := Robot{program: program}
+	robot.explore(robotX, robotY, area)
+
+	area.print()
+
+	var longestPath int
+	for y := 0; y < len(area); y++ {
+		for x := 0; x < len(area); x++ {
+			if area[y][x] != "#" && area[y][x] != "" {
+				paths := robot.findPathToMask(x, y, area)
+
+				for _, path := range paths {
+					if path > longestPath {
+						longestPath = path
+					}
+				}
+			}
+		}
+	}
+
+	return strconv.Itoa(longestPath)
 }
