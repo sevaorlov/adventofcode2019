@@ -103,17 +103,17 @@ func Part1(filename string) string {
 
 	//printGrid(grid)
 
-	biodeversities := make(map[string]bool)
-	biodeversities[gridString(grid)] = true
+	cache := make(map[string]bool)
+	cache[gridString(grid)] = true
 
 	for {
 		grid = playMinute(grid)
 
-		if biodeversities[gridString(grid)] {
+		if cache[gridString(grid)] {
 			break
 		}
 
-		biodeversities[gridString(grid)] = true
+		cache[gridString(grid)] = true
 	}
 
 	return strconv.FormatInt(biodiversity(grid), 10)
