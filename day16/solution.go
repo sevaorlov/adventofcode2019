@@ -122,8 +122,9 @@ func Part2(filename string) string {
 	logger.Debug("offset", offset)
 
 	new := make([]int, len(items))
+	new[len(items)-1] = items[len(items)-1]
+
 	for i := 0; i < stopPhase; i++ {
-		new[len(items)-1] = items[len(items)-1]
 		for j := len(items) - 2; j >= 0; j-- {
 			new[j] = (items[j] + new[j+1]) % 10
 		}
