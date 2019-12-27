@@ -42,7 +42,7 @@ func (a Area) print() {
 			}
 		}
 		if notEmptyCount > 0 {
-			fmt.Printf("%s\r", lineStr)
+			fmt.Printf("%s\n", lineStr)
 		}
 	}
 }
