@@ -125,7 +125,7 @@ func Part2(filename string) string {
 	new[len(items)-1] = items[len(items)-1]
 
 	for i := 0; i < stopPhase; i++ {
-		for j := len(items) - 2; j >= 0; j-- {
+		for j := len(items) - 2; j >= offset; j-- {
 			new[j] = (items[j] + new[j+1]) % 10
 		}
 
