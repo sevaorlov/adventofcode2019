@@ -110,3 +110,19 @@ func ReadIntSpacedArray(filename string) []int {
 
 	return a
 }
+
+func ReadIntArray(filename string, separator string) []int {
+	line := ReadSingleLine(filename)
+
+	var elements []int
+
+	for _, item := range strings.Split(line, separator) {
+		i, err := strconv.Atoi(item)
+		if err != nil {
+			log.Fatalf("couldnt parse string to int %v. Error: %s \n", item, err.Error())
+		}
+		elements = append(elements, i)
+	}
+
+	return elements
+}
