@@ -108,6 +108,8 @@ func Part1(filename string) string {
 	return intArrayToString(items[0:8])
 }
 
+// as offset > len(items) / 2, all patterns will be 1
+// and there is no need to calculate for items before the offset, the pattern will be 0 for them
 func Part2(filename string) string {
 	items := input.ReadIntArray(filename, "")
 	logger.Debug(items)
