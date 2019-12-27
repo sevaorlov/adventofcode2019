@@ -76,7 +76,7 @@ func biodiversity(grid [][]string) int64 {
 	for i := 0; i < len(grid); i++ {
 		for j := 0; j < len(grid); j++ {
 			if grid[i][j] == "#" {
-				pow := i * 5 + j
+				pow := i*5 + j
 				rate += int64(math.Pow(float64(2), float64(pow)))
 				//fmt.Println(i, j, rate)
 			}

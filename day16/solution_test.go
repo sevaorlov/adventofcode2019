@@ -14,5 +14,5 @@ func TestPart1(t *testing.T) {
 
 func TestPart2(t *testing.T) {
 	got := day16.Part2(input.MainFileName)
-	assert.Equal(t, "", got)
+	assert.Equal(t, "28135104", got)
 }
